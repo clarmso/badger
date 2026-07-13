@@ -2,7 +2,7 @@
 
 A cosy animated fireplace app for the GitHub Universe 2025 badge. The speed can be adjusted to the user's preference.
 
-<img src="assets/fireplace_badge.jpg">
+<img src="assets/fireplace_badge.jpg" width="30%">
 
 This app was inspired by the fireplace from [Lenny's Podcast](https://www.lennysnewsletter.com/podcast) quietly running in the background.
 
