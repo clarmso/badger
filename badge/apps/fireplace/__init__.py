@@ -17,6 +17,7 @@ _current_frame    = 0
 _last_tick        = None
 _frame_duration   = DEFAULT_DURATION
 _label_until      = 0     # ticks timestamp until which to show the label
+_needs_redraw     = True  # reload frame when it advances or label expires
 
 _font             = None
 _label_brush      = None
@@ -32,7 +33,7 @@ def init():
 
 
 def update():
-    global _current_frame, _last_tick, _frame_duration, _label_until
+    global _current_frame, _last_tick, _frame_duration, _label_until, _needs_redraw
 
     if _last_tick is None:
         _last_tick = io.ticks
@@ -56,11 +57,17 @@ def update():
     if io.ticks - _last_tick >= _frame_duration:
         _current_frame = (_current_frame + 1) % FRAME_COUNT
         _last_tick = io.ticks
+        _needs_redraw = True
 
-    screen.load_into(f"frames/frame_{_current_frame:04d}.png")
+    showing_label = io.ticks < _label_until
+
+    # Only reload the PNG when the frame changed or the label just cleared
+    if _needs_redraw:
+        screen.load_into(f"frames/frame_{_current_frame:04d}.png")
+        _needs_redraw = showing_label  # stay dirty while label is visible
 
     # Show speed label if recently changed
-    if io.ticks < _label_until:
+    if showing_label:
         label = f"{_frame_duration}ms/frame"
         w, h = screen.measure_text(label)
         pad = 4
@@ -72,5 +79,5 @@ def update():
         screen.text(label, x, y)
 
 
-init()
-run(update)
+if __name__ == "__main__":
+    run(update, init=init)

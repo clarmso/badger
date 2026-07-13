@@ -27,7 +27,10 @@ Copy the `fireplace/` folder to `/system/apps/fireplace/` on your badge (put it 
 fireplace/
 ├── __init__.py       # App code
 ├── icon.png          # Menu icon (24x24)
-├── fireplace.gif     # Original source GIF
+├── assets/           # Source images
+│   ├── fireplace.gif         # Original source GIF
+│   ├── fireplace_badge.jpg   # Badge photo
+│   └── lenny_fireplace.jpg   # Lenny photo
 └── frames/           # Extracted PNG frames (frame_0000.png … frame_0019.png)
 ```
 
